@@ -31,32 +31,63 @@ export default {
           redirectUri: window.location.href,
         });
       }
-      if (liff.isApiAvailable("shareTargetPicker")) {
-        try {
-          const picker = await liff.shareTargetPicker([{
-            type: "text",
-            text: "Hello, World!",
-          }, ]);
-          if (picker) {
-            // succeeded in sending a message through TargetPicker
-            console.log(`[${picker.status}] Message sent!`);
+      if (liff.isApiAvailable('shareTargetPicker')) {
+        liff.shareTargetPicker([
+          // {
+          //   type: "text",
+          //   text: "Hello!"
+          // }
+          {
+            type: 'flex',
+            altText: "Hello!",
+            contents: {
+              type: 'bubble',
+              body: {
+                type: 'box',
+                layout: 'vertical',
+                contents: [
+                  {
+                    type: 'image',
+                    url: "https://d24o4k0vdyt0z8.cloudfront.net/quote.user.uploads/20210531/6577448d23e8318154ca18d2dd21afc121401a69bc3f4f483eca396d74fec7c2af1b155bb84dc5c745d4967f55be6724a38b53cf9404695a515f292697daab15.jpg",
+                    size: 'full',
+                    aspectRatio: '13:14',
+                    aspectMode: 'cover',
+                    gravity: 'center',
+                  },
+                ],
+                paddingAll: '0px',
+              },
+              footer: {
+                type: 'box',
+                layout: 'vertical',
+                contents: [
+                  {
+                    type: 'button',
+                    action: {
+                      type: 'uri',
+                      label: "金銀喵官網!",
+                      uri: "https://kimyimcats-stage.fingergame.com/index.html",
+                    },
+                  },
+                ],
+                flex: 0,
+              },
+            },
+          },
+        ])
+        .then(function(res) {
+          if (res) {
+            // succeeded to send message in TargetPicker
+            console.log(`[${res.status}] Message [${this.msgType}] is sent!`)
           } else {
-            const [majorVer, minorVer] = (liff.getLineVersion() || "").split(
-              "."
-            );
-            if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
-              console.log(
-                "TargetPicker was opened at least. Whether succeeded to send message is unclear"
-              );
-            } else console.log("TargetPicker was closed!");
+            // canceled to send message
+            console.log('TargetPicker was closed!')
           }
-        } catch (error) {
-          // something went wrong before sending a message
-          console.log(error);
-          console.log("Flex Message got some error");
-          liff.closeWindow();
-        }
-      } else console.log("Please login...");
+        }).catch(function(error) {
+          // something wrong happened before sending message properly
+          console.log(error, 'something wrong happen')
+        })
+      }
     }
     return {
       sendTargetPicker,

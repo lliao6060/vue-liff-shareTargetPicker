@@ -42,3 +42,12 @@ npm run build
 # License
 
 MIT License
+
+
+# usagi
+1. [登入line developers](https://developers.line.biz/console/channel/1656921427/liff)(帳號yo_yo95@yahoo.com.tw 密碼small一樣)
+2. 到.env替換`LIFF ID`
+3. 用`ngrok` 生成一個`https`環境的網址，記得要改[line developers](https://developers.line.biz/console/channel/)裡面的`LINE Login > Callback URL`和 `LIFF > 你創的LIFF applications > Endpoint URL> 
+`
+4. 瀏覽器輸入剛才產生的ngrok網址就可以了
+
